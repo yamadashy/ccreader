@@ -1,5 +1,5 @@
 ---
-allowed-tools: WebFetch, WebSearch, Bash(gh issue:*), Bash(gh label:*)
+allowed-tools: WebFetch, WebSearch, Bash(gh issue:*), Bash(gh label:*), Bash(gh repo:*), Bash(gh pr:*), Bash(gh release:*), Bash(gh api:*), mcp__deepwiki__*
 description: "新規コンテンツを処理（タイトル・要約・ラベル・コメントを自動生成）"
 ---
 
@@ -186,6 +186,30 @@ EOF
 - 関連 Issue がない場合は Related セクションを省略
 - 補足情報がない場合は Supplement セクションを省略
 - 不明な Info 項目は省略
+
+---
+
+## ケースごとの対応
+
+### GitHub リポジトリの場合
+
+URL が GitHub リポジトリ（`github.com/{owner}/{repo}`）の場合：
+
+1. **gh コマンドで基本情報を取得**
+   ```bash
+   gh repo view {owner}/{repo} --json description,stargazerCount,forkCount,primaryLanguage,repositoryTopics,createdAt,updatedAt
+   ```
+
+2. **DeepWiki で詳細情報を取得**
+   - `mcp__deepwiki__read_wiki_contents` でリポジトリの概要・アーキテクチャを取得
+   - `mcp__deepwiki__ask_question` で主要な機能や特徴、使い方を質問
+
+3. **要約に含める内容**
+   - リポジトリの目的・用途
+   - 主要な機能・特徴
+   - 技術スタック
+   - 類似ツールとの違い（分かれば）
+   - スター数・フォーク数などの人気度
 
 ---
 
