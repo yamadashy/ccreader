@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch",
+      "WebSearch",
+      "Skill",
+      "Bash(git config:*)",
+      "Bash(find:*)",
+      "Bash(cat:*)",
+      "Bash(gh issue:*)",
+      "Bash(gh label:*)",
+      "Bash(gh repo:*)",
+      "Bash(gh pr:*)",
+      "Bash(gh release:*)",
+      "Bash(gh api:*)",
+      "Bash(gh run list:*)",
+      "mcp__deepwiki__*",
+      "Bash(fd:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git fetch:*)",
+      "Bash(git add:*)",
+      "Bash(trash:*)",
+      "Bash(git mv:*)",
+      "Bash(npx repomix@latest:*)",
+      "Bash(curl:*)",
+      "Bash(pdftotext:*)",
+      "Bash(python3:*)",
+      "Bash(git ls-files:*)"
+    ],
+    "deny": [],
+    "ask": []
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "deepwiki"
+  ]
+}
