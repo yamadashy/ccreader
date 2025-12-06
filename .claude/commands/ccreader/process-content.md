@@ -189,95 +189,13 @@ EOF
 
 ## ケースごとの対応
 
-### GitHub リポジトリの場合
+URL の種類に応じて、対応するスキルを参照してコンテンツを取得：
 
-URL が GitHub リポジトリ（`github.com/{owner}/{repo}`）の場合：
-
-1. **gh コマンドで基本情報を取得**
-   ```bash
-   gh repo view {owner}/{repo} --json description,stargazerCount,forkCount,primaryLanguage,repositoryTopics,createdAt,updatedAt
-   ```
-
-2. **DeepWiki で詳細情報を取得**
-   - `mcp__deepwiki__read_wiki_contents` でリポジトリの概要・アーキテクチャを取得
-   - `mcp__deepwiki__ask_question` で主要な機能や特徴、使い方を質問
-
-3. **要約に含める内容**
-   - リポジトリの目的・用途
-   - 主要な機能・特徴
-   - 技術スタック
-   - 類似ツールとの違い（分かれば）
-   - スター数・フォーク数などの人気度
-
-### SpeakerDeck スライドの場合
-
-URL が SpeakerDeck（`speakerdeck.com/{user}/{slug}`）の場合：
-
-1. **WebFetch でページ情報と PDF URL を取得**
-   - WebFetch でスライドページを取得
-   - HTML 内のテキストトランスクリプト（`speakerdeck-transcript` クラス）があれば、それを要約に使用
-   - PDF ダウンロード URL を抽出（`https://files.speakerdeck.com/presentations/{id}/{filename}.pdf` 形式）
-
-2. **PDF をダウンロードして読み取り**
-
-   トランスクリプトがない場合、または詳細な内容が必要な場合：
-   ```bash
-   curl -L -o /tmp/slide.pdf "{PDF_URL}"
-   ```
-
-   ダウンロード後、Read ツールで PDF を直接読み取り：
-   - Read ツールは PDF を直接読み取れる（マルチモーダル機能）
-   - 各スライドの内容を視覚的に解析可能
-
-3. **要約に含める内容**
-   - 発表タイトル
-   - 発表者名・所属
-   - 発表の目的・背景
-   - 主要なポイント（スライドごとの要点）
-   - 結論・まとめ
-   - 発表日・イベント名（分かれば）
-
-4. **読了時間の推定**
-   - スライド枚数 × 1〜2分 を目安に
-
-### arXiv 論文の場合
-
-URL が arXiv（`arxiv.org/abs/{論文ID}`）の場合：
-
-1. **WebFetch でメタデータを取得**
-   - WebFetch で arXiv ページを取得
-   - 以下を抽出：
-     - 論文タイトル
-     - 著者一覧
-     - アブストラクト
-     - カテゴリ（cs.SE、cs.AI など）
-     - 公開日
-
-2. **PDF をダウンロードして読み取り**
-
-   より詳細な内容が必要な場合、PDF をダウンロード：
-   ```bash
-   curl -L -o /tmp/paper.pdf "https://arxiv.org/pdf/{論文ID}.pdf"
-   ```
-
-   ダウンロード後、Read ツールで PDF を直接読み取り：
-   - Read ツールは PDF を直接読み取れる（マルチモーダル機能）
-   - 図表や数式も視覚的に解析可能
-
-3. **要約に含める内容**
-   - 研究の目的・背景
-   - 提案手法の概要
-   - 主要な貢献（Contributions）
-   - 実験結果・評価
-   - 結論
-   - 関連技術・キーワード
-
-4. **読了時間の推定**
-   - ページ数 × 3〜5分 を目安に（技術論文のため）
-
-5. **補足情報**
-   - 関連する先行研究があれば言及
-   - 専門用語の簡単な説明
+| ドメイン | スキル |
+|----------|--------|
+| `github.com` | `github-repo-reader` |
+| `speakerdeck.com` | `speakerdeck-reader` |
+| `arxiv.org` | `arxiv-reader` |
 
 ---
 

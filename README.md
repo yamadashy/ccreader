@@ -42,6 +42,17 @@ Issue 作成時に Claude が自動で以下を実行
 4. 関連 Issue を検索（最大5件）
 5. コメントに要約を投稿
 
+### 対応サイト
+
+| サイト | 読み取り方法 |
+|--------|-------------|
+| 一般的なサイト | WebFetch で取得 |
+| GitHub リポジトリ | `gh` コマンド + DeepWiki MCP |
+| SpeakerDeck | PDF ダウンロード + Read ツール |
+| arXiv | PDF ダウンロード + Read ツール |
+
+各サイトの詳細な読み取り方法は Agent Skills（[.claude/skills/](.claude/skills/)）で定義
+
 ### ラベル
 
 [.github/labels.yml](.github/labels.yml) を参照
