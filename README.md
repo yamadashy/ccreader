@@ -1,11 +1,13 @@
 # ccreader
 
-GitHub Issue + Claude Code Action でコンテンツ（記事・動画・本など）を管理する実験的なリポジトリ
+GitHub Issue + Claude Code Action で「あとで読む」を管理する実験的なリポジトリ
 
 ## 使い方
 
 1. `New Issue` > `New Content` から記事などの URL を入力して Issue を作成
-2. Claude Code Action で、タイトル・要約・ラベル付与・関連 Issue 検索
+  ![New Content](./docs/images/usage-new-content.png)
+2. Claude Code Action によって、タイトル・要約・ラベル付与・関連 Issue 検索などの結果がコメントされる
+  ![Claude Process Content](./docs/images/usage-claude-process-content.png)
 3. 読了したら Issue を Close
 
 以下のようなURLをブックマークしておくと追加しやすい
@@ -28,7 +30,7 @@ Slack に GitHub アプリをインストールし、Issueイベントを通知�
 /github subscribe yamadashy/ccreader issues,comments
 ```
 
-![Slack連携](./docs/images/slack.png)
+![Slack連携](./docs/images/slack-github.png)
 
 ## 仕様
 
