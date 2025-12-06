@@ -12,7 +12,7 @@
   description: "Slides, presentation"
 - name: "type:video"
   color: "c5def5"
-  description: "YouTube, conference video"
+  description: "Conference video, talk"
 - name: "type:book"
   color: "c5def5"
   description: "Book"

@@ -44,21 +44,19 @@ gh issue comment $2 --repo $1 --body "処理中...<img src=\"https://github.com/
 gh api repos/$1/issues/$2/comments --jq '.[-1].id'
 ```
 
-**以降、各ステップで進捗コメントを更新してください：**
-```bash
-gh api repos/$1/issues/comments/{comment_id} -X PATCH -f body="処理中... {現在の状況} <img src=\"https://github.com/user-attachments/assets/5ac382c7-e004-429b-8e35-7feb3e8f9c6f\" width=\"14px\" height=\"14px\" style=\"vertical-align: middle; margin-left: 4px;\" />"
-```
-
-例：
-- `処理中... コンテンツを取得しています`
-- `処理中... 要約を生成しています`
-- `処理中... 関連 Issue を検索しています`
-
 ---
 
 ### 3. URL からコンテンツを取得
 - WebFetch ツールでコンテンツを取得
 - タイトル、本文、メタ情報を解析
+
+**WebFetch に失敗した場合:**
+
+進捗コメントを以下のように更新して処理を終了：
+
+```bash
+gh api repos/$1/issues/comments/{comment_id} -X PATCH -f body="⚠️ コンテンツの取得に失敗しました。"
+```
 
 ---
 
