@@ -1,5 +1,5 @@
 ---
-allowed-tools: WebFetch, WebSearch, Bash(gh issue:*), Bash(gh label:*), Bash(gh repo:*), Bash(gh pr:*), Bash(gh release:*), Bash(gh api:*), mcp__deepwiki__*
+allowed-tools: WebFetch, WebSearch, Skill, Bash(gh issue:*), Bash(gh label:*), Bash(gh repo:*), Bash(gh pr:*), Bash(gh release:*), Bash(gh api:*), mcp__deepwiki__*
 description: "新規コンテンツを処理（タイトル・要約・ラベル・コメントを自動生成）"
 ---
 
