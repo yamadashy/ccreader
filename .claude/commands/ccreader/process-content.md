@@ -17,26 +17,42 @@ URL だけが入力された Issue を処理し、コメントに要約を投稿
 
 ---
 
-### 1. Issue 情報の取得
+### 1. Issue 情報とラベル一覧の取得
+
 ```bash
 gh issue view $2 --repo $1 --json title,body,labels
 ```
 - Issue 本文から URL を抽出
 
+```bash
+gh label list --repo $1 --json name,description
+```
+- `type:*` と `topic:*` のラベルを確認し、後続の判定で使用
+
 ---
 
-### 2. 処理中コメントを投稿
+### 2. 進捗コメントを投稿
 
-まず「処理中」であることを示すコメントを投稿し、comment_id を取得します。
+処理状況を示すコメントを投稿し、comment_id を取得します。
 
 ```bash
 gh issue comment $2 --repo $1 --body "処理中...<img src=\"https://github.com/user-attachments/assets/5ac382c7-e004-429b-8e35-7feb3e8f9c6f\" width=\"14px\" height=\"14px\" style=\"vertical-align: middle; margin-left: 4px;\" />"
 ```
 
-コメント投稿後、そのコメントのIDを取得します：
+コメント投稿後、そのコメントのIDを取得：
 ```bash
 gh api repos/$1/issues/$2/comments --jq '.[-1].id'
 ```
+
+**以降、各ステップで進捗コメントを更新してください：**
+```bash
+gh api repos/$1/issues/comments/{comment_id} -X PATCH -f body="処理中... {現在の状況} <img src=\"https://github.com/user-attachments/assets/5ac382c7-e004-429b-8e35-7feb3e8f9c6f\" width=\"14px\" height=\"14px\" style=\"vertical-align: middle; margin-left: 4px;\" />"
+```
+
+例：
+- `処理中... コンテンツを取得しています`
+- `処理中... 要約を生成しています`
+- `処理中... 関連 Issue を検索しています`
 
 ---
 
@@ -56,29 +72,18 @@ gh api repos/$1/issues/$2/comments --jq '.[-1].id'
 - サイト名が不明な場合はドメイン名を使用
 
 #### タイプ（1つ選択）
-| ラベル | 判定基準 |
-|--------|---------|
-| `type:article` | ブログ記事、ニュース、技術記事 |
-| `type:slide` | SpeakerDeck, SlideShare, Google Slides |
-| `type:video` | YouTube, Vimeo, カンファレンス動画 |
-| `type:book` | Amazon, O'Reilly, 書籍紹介ページ |
-| `type:paper` | arXiv, 論文、学術資料 |
-| `type:podcast` | Spotify, Apple Podcasts, 音声コンテンツ |
-| `type:other` | 上記に当てはまらない |
+
+ステップ1で取得した `type:*` ラベルから、コンテンツに最も適したものを1つ選択。
+ラベルの description を参考に判断。
 
 #### トピック（1-3個選択または新規作成）
 
-既存のトピック：
-- `topic:ai` - AI・機械学習・LLM
-- `topic:backend` - サーバーサイド、API、DB
-- `topic:frontend` - UI、React、CSS
-- `topic:infrastructure` - クラウド、DevOps、SRE
-- `topic:career` - キャリア、働き方
-- `topic:productivity` - 生産性、ツール
+ステップ1で取得した `topic:*` ラベルから、コンテンツに適したものを1-3個選択。
+ラベルの description を参考に判断。
 
-**適切なトピックがない場合**は、新しいトピックラベルを作成してください：
+**適切なトピックがない場合**は、新しいトピックラベルを作成：
 ```bash
-gh label create "topic:新しいトピック名" --repo $1 --color dddddd --description "トピックの説明"
+gh label create "topic:新しいトピック名" --repo $1 --color dddddd --description "トピックの説明（英語）"
 ```
 
 #### 要約
@@ -145,7 +150,7 @@ gh issue edit $2 --repo $1 --add-label "type:xxx,topic:yyy,topic:zzz"
 
 ### 8. コメントを編集（要約と関連 Issue）
 
-処理中コメントを編集して、完成した内容に更新します：
+進捗コメントを最終的な内容に更新します：
 
 ```bash
 gh api repos/$1/issues/comments/{comment_id} -X PATCH -f body="$(cat <<'EOF'
