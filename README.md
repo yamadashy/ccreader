@@ -1,6 +1,6 @@
 # ccreader
 
-GitHub Issue + Claude Code Action でコンテンツ（記事・動画・本など）を管理するリポジトリ
+GitHub Issue + Claude Code Action でコンテンツ（記事・動画・本など）を管理する実験的なリポジトリ
 
 ## 使い方
 
@@ -18,11 +18,23 @@ https://github.com/yamadashy/ccreader/issues/new?template=new-content.yml
 2. Claude Code で `/install-github-app` を実行し Secrets に登録
 3. Claude Code で `/ccreader:sync-labels` を実行し、ラベルを同期
 
+### Slack 連携
+
+Slack に GitHub アプリをインストールし、Issueイベントを通知するチャンネルを作成
+
+以下のコマンドを実行し、通知設定を行う
+
+```
+/github subscribe yamadashy/ccreader issues,comments
+```
+
+![Slack連携](./docs/images/slack.png)
+
 ## 仕様
 
 ### 処理内容
 
-Issue 作成時に Claude が自動で以下を実行：
+Issue 作成時に Claude が自動で以下を実行
 
 1. URL からコンテンツを取得
 2. タイトル・要約・補足情報を生成
