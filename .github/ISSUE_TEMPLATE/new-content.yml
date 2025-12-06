@@ -1,0 +1,13 @@
+name: 📄 New Content
+description: "Add new content to read"
+title: "New content"
+labels:
+  - content
+body:
+  - type: input
+    id: url
+    attributes:
+      label: URL
+      placeholder: https://example.com/article
+    validations:
+      required: true
